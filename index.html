@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#164b3b">
+<title>সহিহ দোয়া</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--green:#164b3b;--green2:#24664d;--bg:#f5f7f4;--ink:#1d2c25;--muted:#68766f;--card:#fff}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,"Noto Sans Bengali",sans-serif}
+header{background:var(--green);color:white;padding:22px 18px 26px;border-radius:0 0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between}.brand{font-size:25px;font-weight:800}.sub{font-size:13px;color:#dcebe3;margin-top:5px}
+main{max-width:760px;margin:auto;padding:16px}
+.search{width:100%;padding:14px 15px;border:1px solid #e0e7e1;border-radius:14px;font-size:16px;margin:0 0 18px;background:white}
+h2{font-size:18px;margin:18px 2px 12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.category{border:0;text-align:left;background:white;padding:16px;border-radius:15px;box-shadow:0 2px 8px #193d2810;color:var(--ink);font-size:15px;font-weight:650;min-height:75px}
+.category span{display:block;color:var(--green2);font-size:22px;margin-bottom:7px}
+.card{background:white;border-radius:16px;padding:17px;margin:10px 0;box-shadow:0 2px 8px #193d2810}
+.arabic{font-family:"Noto Naskh Arabic","Amiri",serif;font-size:27px;line-height:1.9;text-align:right;direction:rtl;margin:10px 0 16px}
+.label{font-size:12px;font-weight:750;color:var(--green2);margin-top:12px}
+.meaning{line-height:1.8}.source{font-size:13px;color:var(--muted);line-height:1.6}
+.actions{display:flex;gap:8px;margin-top:12px}.btn{border:1px solid #d9e4dc;background:#f7faf7;color:var(--green);border-radius:10px;padding:9px 12px;font-size:14px}
+nav{position:sticky;bottom:0;background:#ffffffed;border-top:1px solid #e6ebe7;display:flex;justify-content:center;gap:12px;padding:10px}
+nav button{background:none;border:0;color:var(--green);padding:8px 12px;font-weight:700}
+.small{font-size:12px;color:var(--muted);text-align:center;padding:12px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">সহিহ দোয়া</div><div class="sub">বিশুদ্ধ দোয়া শিখুন, আমল করুন</div></div><div aria-hidden="true" style="font-size:27px">۞</div></div></header>
+<main>
+<input id="search" class="search" placeholder="দোয়া বা বিষয় খুঁজুন..." aria-label="দোয়া খুঁজুন">
+<section id="home">
+<h2>দোয়ার বিভাগ</h2>
+<div class="grid" id="categories"></div>
+<h2>নির্বাচিত দোয়া</h2>
+<div id="featured"></div>
+</section>
+<section id="results" class="hidden"><h2 id="resultTitle">দোয়া</h2><div id="resultList"></div></section>
+<section id="saved" class="hidden"><h2>পছন্দের দোয়া</h2><div id="savedList"></div></section>
+<div class="small">এই প্রাথমিক সংস্করণে দোয়ার সংখ্যা সীমিত। যাচাই ছাড়া কোনো দোয়াকে সহিহ হিসেবে চিহ্নিত করা হবে না।</div>
+</main>
+<nav><button onclick="showTab('home')">হোম</button><button onclick="showTab('saved')">পছন্দের দোয়া</button></nav>
+<script>
+const categories=[
+ {id:"morning",name:"সকাল-সন্ধ্যার দোয়া",icon:"☀️"},
+ {id:"sleep",name:"ঘুমের দোয়া",icon:"🌙"},
+ {id:"food",name:"খাবারের দোয়া",icon:"🍽️"},
+ {id:"home",name:"ঘর ও বাইরে",icon:"⌂"},
+ {id:"prayer",name:"সালাতের দোয়া",icon:"◉"},
+ {id:"need",name:"বিপদে ও প্রয়োজনে",icon:"♡"}
+];
+const duas=[
+ {id:"sleep-001",category:"sleep",title:"ঘুমানোর সময়ের দোয়া",arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَكَفَانَا وَآوَانَا، فَكَمْ مِمَّنْ لَا كَافِيَ لَهُ وَلَا مُؤْوِيَ",pronunciation:"আলহামদু লিল্লাহিল্লাযী আত‘আমানা ওয়া সাকানা, ওয়া কাফানা ওয়া আওয়ানা; ফাকাম মিম্মান লা কাফিয়া লাহু ওয়ালা মু’ওয়িয়া।",meaning:"সকল প্রশংসা আল্লাহর, যিনি আমাদের খাইয়েছেন, পান করিয়েছেন, আমাদের জন্য যথেষ্ট হয়েছেন এবং আশ্রয় দিয়েছেন। কত মানুষ আছে, যার জন্য যথেষ্ট হওয়ার কেউ নেই এবং আশ্রয় দেওয়ারও কেউ নেই।",source:"মিশকাতুল মাসাবীহ ২৩৮৬; মূল বর্ণনা সহিহ মুসলিমে এসেছে। বর্ণনাটির মান: সহিহ।",url:"https://sunnah.com/mishkat:2386"}
+];
+function getSaved(){try{return JSON.parse(localStorage.getItem("sahih-dua-saved")||"[]")}catch(e){return []}}
+function saveSaved(a){localStorage.setItem("sahih-dua-saved",JSON.stringify(a))}
+function card(d){const saved=getSaved().includes(d.id);return `<article class="card"><strong>${d.title}</strong><div class="arabic" lang="ar">${d.arabic}</div><div class="label">বাংলা উচ্চারণ</div><div class="meaning">${d.pronunciation}</div><div class="label">বাংলা অর্থ</div><div class="meaning">${d.meaning}</div><div class="label">সূত্র ও মান</div><div class="source">${d.source}<br><a href="${d.url}" target="_blank" rel="noopener">মূল সূত্র দেখুন</a></div><div class="actions"><button class="btn" onclick="toggleSaved('${d.id}')">${saved?"★ সংরক্ষিত":"☆ পছন্দে রাখুন"}</button></div></article>`}
+function render(){document.getElementById("categories").innerHTML=categories.map(c=>`<button class="category" onclick="openCategory('${c.id}')"><span>${c.icon}</span>${c.name}</button>`).join("");document.getElementById("featured").innerHTML=card(duas[0])}
+function showTab(tab){["home","results","saved"].forEach(x=>document.getElementById(x).classList.toggle("hidden",x!==tab));document.getElementById("search").value=""}
+function openCategory(id){document.getElementById("home").classList.add("hidden");document.getElementById("saved").classList.add("hidden");document.getElementById("results").classList.remove("hidden");let c=categories.find(x=>x.id===id);document.getElementById("resultTitle").textContent=c.name;let a=duas.filter(d=>d.category===id);document.getElementById("resultList").innerHTML=a.length?a.map(card).join(""):'<div class="card">এই বিভাগে আরও যাচাইকৃত দোয়া যুক্ত করা হচ্ছে।</div>'}
+function toggleSaved(id){let a=getSaved();a=a.includes(id)?a.filter(x=>x!==id):[...a,id];saveSaved(a);render();if(!document.getElementById("saved").classList.contains("hidden"))showSaved()}
+function showSaved(){document.getElementById("home").classList.add("hidden");document.getElementById("results").classList.add("hidden");document.getElementById("saved").classList.remove("hidden");let a=duas.filter(d=>getSaved().includes(d.id));document.getElementById("savedList").innerHTML=a.length?a.map(card).join(""):'<div class="card">এখনো কোনো দোয়া সংরক্ষণ করা হয়নি।</div>'}
+document.querySelector('nav button:nth-child(2)').onclick=showSaved;
+document.getElementById("search").addEventListener("input",e=>{let q=e.target.value.trim().toLowerCase();if(!q){showTab("home");return}document.getElementById("home").classList.add("hidden");document.getElementById("saved").classList.add("hidden");document.getElementById("results").classList.remove("hidden");document.getElementById("resultTitle").textContent="খোঁজার ফলাফল";let a=duas.filter(d=>(d.title+d.arabic+d.pronunciation+d.meaning).toLowerCase().includes(q));document.getElementById("resultList").innerHTML=a.length?a.map(card).join(""):'<div class="card">কোনো দোয়া পাওয়া যায়নি।</div>'});
+render();
+if("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>

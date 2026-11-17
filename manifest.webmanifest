@@ -1,0 +1,10 @@
+{
+  "name": "সহিহ দোয়া",
+  "short_name": "সহিহ দোয়া",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7f4",
+  "theme_color": "#164b3b",
+  "lang": "bn",
+  "description": "আরবি দোয়া, বাংলা উচ্চারণ ও অর্থ"
+}
